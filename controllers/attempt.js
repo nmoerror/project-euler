@@ -1,7 +1,6 @@
 const asyncHandler = require('../middleware/async');
 const Attempt = require('../models/Attempt');
 const Problem = require('../models/Problem');
-
 const {
   attemptUtils: { validateBody },
 } = require('../utils/utils');
@@ -15,20 +14,18 @@ exports.getAllAttempts = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Get top attempts
-// @route     GET /api/user/top-attempts
+// @route     GET /api/attempt/top
 // @access    Public
 exports.getTopAttempts = asyncHandler(async (req, res, next) => {
   const attempts = await Attempt.find().sort({ dateTime: -1 });
 
-  if (!attempts) {
-    return res.status(500).json({ success: false });
-  }
+  // TODO: SORT
 
   let top = res.status(200).json({ success: true, count: attempts.length, data: attempts });
 });
 
 // @desc      Submit a solution
-// @route     POST /api/attempt/problem
+// @route     POST /api/attempt
 // @access    Public
 exports.attemptProblem = asyncHandler(async (req, res, next) => {
   validateBody(req.body);

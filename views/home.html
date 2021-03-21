@@ -58,6 +58,7 @@
     </template>
 
     <script>
+      // returns time in 12 hour format
       const getFormattedTime = (time) => {
         let timeHours = new Date(time).getHours();
 
@@ -67,7 +68,7 @@
 
         return timeHours > 12 ? `${timeHours - 12}pm` : `${timeHours}am`;
       };
-      
+
       fetch('/api/attempt').then((res) => res.json().then(res => {
         const tableBody = document.getElementById('attempts');
         const attemptTemplate = document.getElementsByTagName("template")[0];
