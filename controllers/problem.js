@@ -1,3 +1,4 @@
+const asyncHandler = require('../middleware/async');
 const Problem = require('../models/Problem');
 
 // @desc      Get all supported problems
