@@ -1,4 +1,5 @@
 const asyncHandler = require('../middleware/async');
+const { ErrorResponse } = require('../middleware/error');
 const Attempt = require('../models/Attempt');
 const Problem = require('../models/Problem');
 
@@ -45,13 +46,13 @@ exports.attemptProblem = asyncHandler(async (req, res, next) => {
   const { name, solution, problemName } = req.body;
 
   if (!name || !solution || !problemName) {
-    return res.send('Please enter provide a name, a solution and a problem');
+    return next(new ErrorResponse('Please enter provide a name, a solution and a problem', 400));
   }
 
   const problem = await Problem.findOne({ name: req.body.problemName });
 
   if (!problem) {
-    return res.status(500).json({ success: false, message: 'Problem is not supported.' });
+    return next(new ErrorResponse('Problem is not supported.', 500));
   }
 
   const attempt = await Attempt.create({

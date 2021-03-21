@@ -4,6 +4,7 @@
   "description": "Aire Backend Technical Challenge",
   "main": "index.js",
   "scripts": {
+    "test": "mocha",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -12,7 +13,8 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "mocha": "^8.3.2",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "sinon": "^9.2.4"
   },
   "dependencies": {
     "dotenv": "^8.2.0",

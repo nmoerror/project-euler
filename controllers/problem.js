@@ -1,4 +1,5 @@
 const asyncHandler = require('../middleware/async');
+const { ErrorResponse } = require('../middleware/error');
 const Problem = require('../models/Problem');
 
 // @desc      Get all supported problems
@@ -23,7 +24,7 @@ exports.createProblem = asyncHandler(async (req, res, next) => {
   });
 
   if (!problem) {
-    return res.status(500).json({ success: false });
+    return next(new ErrorResponse('Could not create problem', 500));
   }
 
   res.status(201).json({ success: true, data: problem });

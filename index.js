@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const path = require('path');
 const dotenv = require('dotenv');
+const { errorHandler } = require('./middleware/error');
 
 // env
 dotenv.config({ path: './config/config.env' });
@@ -22,6 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 // mount routers
 app.use('/api/attempt', attempt);
 app.use('/api/problem', problem);
+
+// error handler middleware
+app.use(errorHandler);
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
