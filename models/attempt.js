@@ -14,6 +14,11 @@ const AttemptSchema = new mongoose.Schema({
     required: [true, 'Please provide success'],
     default: false,
   },
+  problem: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Problem',
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Attempt', AttemptSchema);

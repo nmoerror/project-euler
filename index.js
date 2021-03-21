@@ -4,7 +4,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 // env
-dotenv.config({ path: './config/config.env'});
+dotenv.config({ path: './config/config.env' });
 
 // Connect Database
 connectDB();
@@ -26,7 +26,7 @@ app.use('/api/problem', problem);
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// serve simple user interface
+// serve simple user interfaces
 app.use('/problem-one', (req, res, next) => {
   res.sendFile(path.join(__dirname, 'views', 'problem-one.html'));
 });

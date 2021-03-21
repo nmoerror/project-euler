@@ -1,54 +1,56 @@
+const asyncHandler = require('../middleware/async');
 const Attempt = require('../models/Attempt');
+const Problem = require('../models/Problem');
+
 const {
-  attemptUtils: { validateBody, createAttemptObject },
+  attemptUtils: { validateBody },
 } = require('../utils/utils');
 
 // @desc      Get all attempts
 // @route     GET /api/attempt
 // @access    Public
-exports.getAllAttempts = (req, res, next) => {};
+exports.getAllAttempts = asyncHandler(async (req, res, next) => {
+  const attempts = await Attempt.find().sort({ dateTime: -1 });
+  res.status(200).json({ success: true, count: attempts.length, data: attempts });
+});
 
 // @desc      Get top attempts
 // @route     GET /api/user/top-attempts
 // @access    Public
-exports.getTopAttempts = (req, res, next) => {};
+exports.getTopAttempts = asyncHandler(async (req, res, next) => {
+  const attempts = await Attempt.find().sort({ dateTime: -1 });
+
+  if (!attempts) {
+    return res.status(500).json({ success: false });
+  }
+
+  let top = res.status(200).json({ success: true, count: attempts.length, data: attempts });
+});
 
 // @desc      Submit a solution
-// @route     POST /api/attempt/problem-1
+// @route     POST /api/attempt/problem
 // @access    Public
-exports.attemptProblemOne = (req, res, next) => {
+exports.attemptProblem = asyncHandler(async (req, res, next) => {
   validateBody(req.body);
 
-  // TODO
-  // find problemOne in database
+  const problem = await Problem.findOne({ name: req.body.problemName });
 
-  const attemptObject = createAttemptObject({ userName: req.body.name, isCorrect });
+  if (!problem) {
+    return res.status(500).json({ success: false });
+  }
+
+  const attempt = await Attempt.create({
+    userName: req.body.name,
+    success: parseInt(req.body.solution) === problem.answer,
+    problem: problem.id,
+  });
+
   if (req.headers.accept.includes('application/json')) {
     return res.status(201).send({
       succes: true,
-      data: 'TODO',
+      data: attempt,
     });
   }
 
   res.redirect('/');
-};
-
-// @desc      Submit a solution
-// @route     POST /api/attempt/problem-3
-// @access    Public
-exports.attemptProblemThree = (req, res, next) => {
-  validateBody(req.body);
-
-  // TODO
-  // find problemThree in database
-
-  const attemptObject = createAttemptObject({ userName: req.body.name, isCorrect });
-  if (req.headers.accept.includes('application/json')) {
-    res.status(201).send({
-      succes: true,
-      data: 'TODO',
-    });
-  }
-
-  res.redirect('/');
-};
+});

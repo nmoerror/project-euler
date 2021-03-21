@@ -116,4 +116,8 @@ th, td {
   white-space: nowrap;
 }
 
+#display-none {
+  display: none;
+}
+
 /* PROBLEM-1 & PROBLEM-2 END*/

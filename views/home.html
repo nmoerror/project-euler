@@ -58,6 +58,16 @@
     </template>
 
     <script>
+      const getFormattedTime = (time) => {
+        let timeHours = new Date(time).getHours();
+
+        if (timeHours === 12) {
+          return `${timeHours}pm`;
+        }
+
+        return timeHours > 12 ? `${timeHours - 12}pm` : `${timeHours}am`;
+      };
+      
       fetch('/api/attempt').then((res) => res.json().then(res => {
         const tableBody = document.getElementById('attempts');
         const attemptTemplate = document.getElementsByTagName("template")[0];
@@ -68,10 +78,10 @@
         const submissionTimeSlot =  attemptTemplate.content.getElementById('submission-time');
         const isCorrectSlot =  attemptTemplate.content.getElementById('is-correct');
 
-        res?.data.map(attempt => {
+        res?.data.sort((a,b) => a.dateTime - b.dateTime).map(attempt => {
           userNameSlot.innerHTML = attempt.userName;
-          submissionTimeSlot.innerHTML = attempt.dateTime;
-          isCorrectSlot.innerHTML = attempt.success;
+          submissionTimeSlot.innerHTML = getFormattedTime(attempt.dateTime);
+          isCorrectSlot.innerHTML = attempt.success ? 1 : 0;
 
           a = document.importNode(tableRowNode, true);
           tableBody.appendChild(a);
