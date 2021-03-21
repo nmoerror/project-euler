@@ -1,3 +1,5 @@
+const Problem = require('../models/Problem');
+
 // @desc      Get all supported problems
 // @route     GET /api/problem
 // @access    Public

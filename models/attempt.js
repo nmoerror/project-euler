@@ -1,31 +1,19 @@
-const fs = require('fs');
-const path = require('path');
-const database = path.join(__dirname, '..', 'data', 'database.json');
+const mongoose = require('mongoose');
 
-module.exports = class Attempt {
-  constructor(data) {
-    this.userName = data.userName;
-    this.dateTime = data.dateTime;
-    this.success = data.success;
-  }
+const AttemptSchema = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: [true, 'Please add a name'],
+  },
+  dateTime: {
+    type: Date,
+    default: Date.now,
+  },
+  success: {
+    type: Boolean,
+    required: [true, 'Please provide success'],
+    default: false,
+  },
+});
 
-  save() {
-    Attempt.getAttempts((data) => {
-      const problems = [...data, this];
-      fs.writeFile(database, JSON.stringify(problems), (error) => {
-        console.log(error);
-      });
-    });
-  }
-
-  static getAttempts = (callBack) => {
-    fs.readFile(database, (error, data) => {
-      if (error) {
-        console.log(error);
-        return callBack([]);
-      }
-
-      return callBack(JSON.parse(data));
-    });
-  };
-};
+module.exports = mongoose.model('Attempt', AttemptSchema);

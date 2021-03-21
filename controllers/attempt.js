@@ -1,4 +1,4 @@
-const Attempt = require('../models/attempt');
+const Attempt = require('../models/Attempt');
 const {
   attemptUtils: { validateBody, createAttemptObject },
 } = require('../utils/utils');
@@ -6,20 +6,12 @@ const {
 // @desc      Get all attempts
 // @route     GET /api/attempt
 // @access    Public
-exports.getAllAttempts = (req, res, next) => {
-  Attempt.getAttempts((attempts) => {
-    res.send({
-      data: attempts,
-    });
-  });
-};
+exports.getAllAttempts = (req, res, next) => {};
 
 // @desc      Get top attempts
 // @route     GET /api/user/top-attempts
 // @access    Public
-exports.getTopAttempts = (req, res, next) => {
-  
-};
+exports.getTopAttempts = (req, res, next) => {};
 
 // @desc      Submit a solution
 // @route     POST /api/attempt/problem-1
@@ -31,13 +23,10 @@ exports.attemptProblemOne = (req, res, next) => {
   // find problemOne in database
 
   const attemptObject = createAttemptObject({ userName: req.body.name, isCorrect });
-
-  new Attempt(attemptObject).save();
-
   if (req.headers.accept.includes('application/json')) {
     return res.status(201).send({
       succes: true,
-      data: attemptObject,
+      data: 'TODO',
     });
   }
 
@@ -54,11 +43,12 @@ exports.attemptProblemThree = (req, res, next) => {
   // find problemThree in database
 
   const attemptObject = createAttemptObject({ userName: req.body.name, isCorrect });
+  if (req.headers.accept.includes('application/json')) {
+    res.status(201).send({
+      succes: true,
+      data: 'TODO',
+    });
+  }
 
-  new Attempt(attemptObject).save();
-
-  res.status(201).send({
-    succes: true,
-    data: attemptObject,
-  });
+  res.redirect('/');
 };
