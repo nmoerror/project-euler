@@ -79,10 +79,10 @@
         const submissionTimeSlot =  attemptTemplate.content.getElementById('submission-time');
         const isCorrectSlot =  attemptTemplate.content.getElementById('is-correct');
 
-        res?.data.sort((a,b) => a.dateTime - b.dateTime).map(attempt => {
+        res?.data.map(attempt => {
           userNameSlot.innerHTML = attempt.userName;
           submissionTimeSlot.innerHTML = getFormattedTime(attempt.dateTime);
-          isCorrectSlot.innerHTML = attempt.success ? 1 : 0;
+          isCorrectSlot.innerHTML = attempt.success;
 
           a = document.importNode(tableRowNode, true);
           tableBody.appendChild(a);

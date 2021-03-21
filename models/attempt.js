@@ -10,9 +10,9 @@ const AttemptSchema = new mongoose.Schema({
     default: Date.now,
   },
   success: {
-    type: Boolean,
+    type: Number,
     required: [true, 'Please provide success'],
-    default: false,
+    default: 0,
   },
   problem: {
     type: mongoose.Schema.ObjectId,
