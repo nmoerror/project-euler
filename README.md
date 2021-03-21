@@ -5,7 +5,7 @@
 2. [Assumptions](#assumptions)
 3. [Notes](#notes)
 
-## API Documentation: https://documenter.getpostman.com/view/11536909/Tz5wVtxQ
+### API Documentation: https://documenter.getpostman.com/view/11536909/Tz5wVtxQ
 
 ## Project Description
   Basic server that runs locally and supports two questions from project euler website.
