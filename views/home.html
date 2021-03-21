@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Auler | Tech Challenge</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <header>
+        <h1>Aire Backend Technical Challenge</h1>
+        <h4 id="author">by Alejandro González</h4>
+      </header>
+      <h2>
+        Select a problem to solve
+      </h2>
+      <div class="problems">
+        <a href="/problem-one">
+          <div class="problem-bellow">
+            <h4 class="problem-bellow-title">
+              Multiples of 3 and 5
+            </h4>
+          </div>
+        </a>
+        <a href="/problem-three">
+          <div class="problem-bellow">
+            <h4 class="problem-bellow-title">
+              Largest prime factor
+            </h4>
+          </div>
+        </a>
+      </div>
+      <header>
+        <h1>All Attempts</h1>
+      </header>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Submission Time</th>
+            <th>Is Correct</th>
+          </tr>
+        </thead>
+        <tbody id="attempts">
+
+        </tbody>
+      </table>
+    </div>
+
+    <template>
+      <tr>
+        <td id="user-name"></td>
+        <td id="submission-time"></td>
+        <td id="is-correct"></td>
+      </tr>
+    </template>
+
+    <script>
+      fetch('/api/attempt').then((res) => res.json().then(res => {
+        const tableBody = document.getElementById('attempts');
+        const attemptTemplate = document.getElementsByTagName("template")[0];
+        const tableRowNode = attemptTemplate.content.querySelector("tr");
+
+        // 'slots' to display data
+        const userNameSlot =  attemptTemplate.content.getElementById('user-name');
+        const submissionTimeSlot =  attemptTemplate.content.getElementById('submission-time');
+        const isCorrectSlot =  attemptTemplate.content.getElementById('is-correct');
+
+        res?.data.map(attempt => {
+          userNameSlot.innerHTML = attempt.userName;
+          submissionTimeSlot.innerHTML = attempt.dateTime;
+          isCorrectSlot.innerHTML = attempt.success;
+
+          a = document.importNode(tableRowNode, true);
+          tableBody.appendChild(a);
+        });
+      }));
+    </script>
+  </body>
+</html>
